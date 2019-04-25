@@ -1,4 +1,4 @@
-# bullshit-codes
+![bullshit](resource/bullshit.png)
 
 #### 介绍
 最坑爹代码集
