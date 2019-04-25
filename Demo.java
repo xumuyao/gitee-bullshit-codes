@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class getNextDay {
+public class Demo {
     
     /**
      * 返回明天的日期
