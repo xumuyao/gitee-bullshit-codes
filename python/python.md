@@ -1,3 +1,5 @@
+方法的默认参数被设置为可变对象，导致调用方法时参数没有初始化，被反复利用  
+
 ```python
 def train_knnm(x, labels, erd, representatives=list()):
     states = np.zeros(len(x))  # Mark all the instance as 'not covered'
@@ -23,12 +25,11 @@ def train_knnm(x, labels, erd, representatives=list()):
             q = 0
             neighbourhood = list()
             errors = 0
-            while q < len(sorted_distances) and (labels[sorted_distances[q][0]] == labels[i] or errors < erd):#根绝容忍度等判断簇是否继续扩散
+            while q < len(sorted_distances) and (labels[sorted_distances[q][0]] == labels[i] or errors < erd):
                 neighbourhood.append(sorted_distances[q][0])
                 if labels[sorted_distances[q][0]] != labels[i]:
                     errors += 1
                 q += 1
-
             if len(neighbourhood) > len(max_neighbourhood):#找当前最大的簇
                 max_neighbourhood = neighbourhood
                 tuple_max_neighbourhood = i
