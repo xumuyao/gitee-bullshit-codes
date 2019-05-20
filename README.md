@@ -41,7 +41,7 @@
 3. 允许提交多个作品
 4. 每段代码请务必给出详细的注释和说明
 
-具体形式可参考参赛作品 [java/Demo.java](Demo.java)
+具体形式可参考参赛作品 [Demo.java](java/Demo.java)
 
 
 ### 参与评选
