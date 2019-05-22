@@ -2,7 +2,6 @@
 
 class  bullshitClass
 {
-    use Db;
 
     /**
      * 示例一：微信支付异步通知的处理
