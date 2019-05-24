@@ -79,7 +79,6 @@
  2.关于活动有任何问题可在码云公众号下留言，我们将在1-2个工作日内给予回复。  
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0514/151233_a16e7749_1899542.png "150码云公众号二维码.png") 
 
-### 主办方
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0524/134554_32130b28_1899542.png "码云logo.png")
+
 ### 赞助商
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0524/135553_2de1b89c_1899542.png "赞助商logo.png")
