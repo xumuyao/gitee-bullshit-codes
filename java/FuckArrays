@@ -1,0 +1,24 @@
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Arrays.asList() 教你重新做人
+ *
+ * @author shuzheng
+ * @date 2019/5/27
+ */
+public class FuckArrays {
+
+    public static void main(String[] args) {
+        int[] datas = new int[]{1, 2, 3, 4, 5};
+        List list = Arrays.asList(datas);
+
+        // 输出：1
+        System.out.println(list.size());
+
+        list.add(6);
+
+        // 输出：上一步抛出 Exception in thread "main" java.lang.UnsupportedOperationException
+        System.out.println(list.size());
+    }
+}
