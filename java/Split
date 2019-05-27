@@ -1,0 +1,28 @@
+/**
+ * 字符串split使用场景比较频繁，此处有一个极易掉坑的操作
+ *
+ * @author shuzheng
+ * @date 2019/5/27
+ */
+public class Split {
+
+    public static void main(String[] args) {
+        String param1 = "1,2";
+        String param2 = "1,2,";
+        String param3 = ",1,2,";
+
+        System.out.println(param1.split(",").length);
+        System.out.println(param2.split(",").length);
+        System.out.println(param3.split(",").length);
+    }
+
+    /*
+     * 输出结果：
+     * 2
+     * 2
+     * 3
+     *
+     * 惊喜不惊喜？结尾的空字符串被丢弃，可使用重载方法 public String [] split (String  regex, int limit) 中 limit 参数控制模式应用的次数，-1 则不会丢弃结尾空字符。
+     */
+
+}
