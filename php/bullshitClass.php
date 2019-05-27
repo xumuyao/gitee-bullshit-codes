@@ -22,4 +22,24 @@ class  bullshitClass
             // 2.给用户的账户加钱
         }
     }
+
+    /**
+     * 示例二：事务的处理
+     * 
+     */
+    public function demo2()
+    {
+        Db::startTrans();
+        try {
+            // 逻辑1
+            // 逻辑2
+            // ...
+            return true;
+            Db::commit();
+        } catch (Exception $e) {
+            return false;
+            Db::rollback();
+          
+        }
+    }
 }
