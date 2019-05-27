@@ -81,4 +81,13 @@
 
 
 ### 赞助商
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0524/141633_95a6fb25_1899542.png "赞助商logo.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0524/141633_95a6fb25_1899542.png "赞助商logo.png")  
+
+
+
+
+
+
+---------开奖区----------  
+5月27日   debuglife  [ 令人发指的新建ID操作](https://gitee.com/oschina/bullshit-codes/blob/master/java/NewId.java)  恭喜获得   **码云官方T恤+霸王防脱套装** 
+
