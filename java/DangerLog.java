@@ -4,7 +4,7 @@ public class DangerLog {
 
 		@Override
 		public String toString() {
-			// 调用该方法将对象的状态，打印或者调试都可能会调用该方法
+			// 调用该方法将更改对象的状态，打印或者调试都可能会调用该方法
 			readNum++;
 			return "ReadLog [readNum:" + readNum + ",其他信息]";
 		}
