@@ -25,9 +25,11 @@
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0514/150323_f40a68bf_1899542.jpeg "200鼠标垫.jpg")
 
  **码云官方T恤**   
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0514/150102_d100ec5d_1899542.png "200T.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0514/150102_d100ec5d_1899542.png "200T.png")   
+   
 
-
+ **PS：请留意活动底部开奖区噢**    :sunglasses:     
+  
  
 
 ### 提交作品
