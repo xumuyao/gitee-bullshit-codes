@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 多看看坑爹代码也是一种成长
+ * Class bullshitClass
+ */
+
 class  bullshitClass
 {
 
