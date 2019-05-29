@@ -1,0 +1,14 @@
+
+public class JudgeBool{
+
+    /**
+     * 来自一名3年编程经验者判断boolean类型
+     * @param isTrue
+     */
+    public void judge(Boolean isTrue) {
+    	if(isTrue == true) {
+    		System.out.println("正确");
+    	}
+    }
+
+}
