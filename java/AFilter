@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+/**
+ * 一行代码就可以搞定的，非要写的花里胡哨。
+ * 
+ * @author z77z
+ *
+ */
+public class AFilter {
+	private boolean isEligible(int age){
+        boolean result;
+        if(age > 18){
+            result = true;
+        }else{
+            result = false;
+        }
+        return result;
+    }
+}
