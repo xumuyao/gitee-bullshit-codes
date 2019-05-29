@@ -1,3 +1,10 @@
+/**
+ * 睡觉排序法
+ * 
+ * @author z77z
+ *
+ */
+
 public class SleepSort {
 	public static void main(String[] args) {
 		int[] ints = { 1, 4, 7, 3, 8, 9, 2, 6, 5 };
