@@ -10,7 +10,7 @@ void delay(uint8_t i)
         while(j -- );
     }
 }
- 
+  
 uint8_t sum_func(uint8_t a,uint8_t b)
 {
     return a + b;
