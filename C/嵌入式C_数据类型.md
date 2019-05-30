@@ -3,7 +3,7 @@
 举个例子：
 ```
 void delay(uint8_t i)
-{
+{ 
 	uint8_t j  = 100;
     while(i -- )
     {
