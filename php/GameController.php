@@ -30,7 +30,7 @@ class GameController extends AdminBaseController{
     }
 
 
-    /* 说到底是同事年纪小（当时不满21）
+    /* 说到底是年纪小（当时不满21）
      * 给他讲不要相信接收的数据、给他讲开始即结束，奈何心里只有+15
      */
 
