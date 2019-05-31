@@ -1,4 +1,5 @@
 <!-- 就是这个查询，慢慢看下去把，你会想死的！ -->
+<!-- 里面嵌套了14个include！！！我让你怎么理清楚！！！ -->
 <select id="getTransDataByDaySumAndAvg" parameterType="transQuery" resultType="TransSumAndAvg">
     select 
             nvl(sum("tradeAmount"),0) as "sumTradeAmount",
