@@ -28,7 +28,7 @@ class FastProductController extends BaseController {
         echo json_encode(
             [
                 'state'=>1100,
-                'message'=>'查询成功',
+                'message'=>'查询成功!',
                 'data'=>$userInfo
             ]
         );
