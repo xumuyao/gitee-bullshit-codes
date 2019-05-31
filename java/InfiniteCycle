@@ -1,0 +1,79 @@
+// 这个无限循环嵌套，只是总循环的一部分。。。我已经绕晕在黄桷湾立交
+if (recordList.size() > start) {
+                        for (int i = start; i < end; i++) {
+                            Map<String, Object> map = recordList.get(i);
+                            Map<String, Object> field11 = (Map<String, Object>) map.get("field"); //name -> code
+                            Map<String, Object> record11 = (Map<String, Object>) map.get("record"); // code -> value
+                            String catagory1 = map.get("categoryId").toString();
+                            //  查询第一种类型对应的其他类型
+                            SalaryDataVo ss = JSON.parseObject(JSON.toJSONString(map), SalaryDataVo.class);
+                            Page page3 = salaryManagerService.getAllRecordsByCondition(ss);
+                            if (page3.getRecords().size() > 0) {
+                                List<Map<String, Object>> salaryDataVos = page3.getRecords();
+                                salaryDataVos = this.reSetMap(salaryDataVos,null,null);
+                                for (Map<String, Object> map2 : salaryDataVos) {
+                                    Map<String, Object> field2 = (Map<String, Object>) map2.get("field");
+                                    Map<String, Object> record2 = (Map<String, Object>) map2.get("record");
+                                    String catagory2 = map2.get("categoryId").toString();
+                                    List<SalaryGroupVO> groupList2 = salaryGroupService.getSalaryGroupsItems(this.getUserCorpId(), catagory2);
+                                    for (SalaryGroupVO cc : groupList2) {
+                                        cc.setCode(cc.getParentId() + cc.getCode());
+                                    }
+                                    //计算
+                                    for (Map.Entry<String, Object> entity : field2.entrySet()) {
+                                        String keyName = entity.getKey();
+                                        for (SalaryGroupVO s2 : groupList2) {
+                                            if ("bigDecimal".equals(s2.getItemType()) && s2.getCode().equals(field2.get(keyName).toString()) && ("部门" != keyName) && ("姓名" != keyName) && StringUtils.isNotEmpty(s2.getItemType())) {
+                                                if (field11.containsKey(keyName)) {
+                                                    if (field11.containsKey(keyName)) {
+                                                        String code1 = field11.get(keyName).toString();
+                                                        Double newValue = 0.0;
+                                                        Double oldValue=0.0;
+                                                        if (!record11.get(code1).toString().matches("^[0-9]*$")) {
+                                                            oldValue = Double.parseDouble(record11.get(code1).toString());
+                                                            if (record2.containsKey(entity.getValue().toString()) && (!record2.get(entity.getValue().toString()).toString().matches("^[0-9]*$"))) {
+                                                                String value2 = record2.get(entity.getValue().toString()).toString();
+                                                                newValue = Double.parseDouble(value2);
+                                                            }
+                                                            record11.remove(field11.get(keyName).toString());
+                                                        }
+                                                        if (code1.startsWith(catagory1)||code1.startsWith(catagory2)) {
+                                                            String co = code1.replace(catagory1, "hz");
+                                                            field11.put(keyName, co);
+                                                            record11.put(co , oldValue + newValue);
+                                                        }
+                                                    }
+                                                } else {
+                                                    String code=entity.getValue().toString();
+                                                    String str=entity.getValue().toString();
+                                                    Object value2 = record2.get(entity.getValue().toString());
+                                                    if(str.startsWith(catagory1)&&str.replace(catagory1,"").startsWith("hz")){
+                                                        code=str.replace(catagory1,"");
+                                                    }else if(str.startsWith(catagory2)&&str.replace(catagory2,"").startsWith("hz")){
+                                                        code= str.replace(catagory2,"");
+                                                    }
+                                                    field11.put(keyName, code);
+                                                    record11.put(code, value2);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            List<SalaryGroupVO> sList=salaryGroupService.getSalaryGroupItemsByParentId(catagory1);
+                            for(SalaryGroupVO s:sList){
+                                if(field11.containsKey(s.getName())&&s.getCode().startsWith("hz")){
+                                    String k=field11.get(s.getName()).toString();
+
+                                    field11.put(s.getName(),s.getCode());
+                                    String value=null;
+                                    if(record11.containsKey(k)){
+                                        value=record11.get(k).toString();
+                                    }
+                                    record11.put(s.getCode(),value);
+                                }
+                            }
+                            resultList.add(map);
+                            pageInfo.setRecords(resultList);
+                        }
+                    }
