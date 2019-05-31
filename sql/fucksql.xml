@@ -1,0 +1,335 @@
+<!-- 就是这个查询，慢慢看下去把，你会想死的！ -->
+<!-- 里面嵌套了14个include！！！我让你怎么理清楚！！！ -->
+<select id="getTransDataByDaySumAndAvg" parameterType="transQuery" resultType="TransSumAndAvg">
+    select 
+            nvl(sum("tradeAmount"),0) as "sumTradeAmount",
+            nvl(sum("tradeCount"),0) as "sumTradeCount",
+            nvl(sum("refundAmount"),0) as "sumRefundAmount",
+            nvl(sum("refundCount"),0) as "sumRefundCount",
+            nvl(sum("reverseAmount"),0) as "sumReverseAmount",
+            nvl(sum("reverseCount"),0) as "sumReverseCount",
+            count(1) as "totalRecord" 
+    from 
+    (<include refid="transDataByDaySql"></include>) 
+</select>
+
+<sql id="transDataByDaySql">
+    SELECT n.COUNT_TIME as "countTime",
+            <include refid="dynamicOutestBasicColSql"></include>
+            <if test="channelId == '_TOTAL' and mchNo == '_TOTAL' and groupno == '_TOTAL'">
+                NVL(c.TRADE_AMOUNT,0) as "accumulateTradeAmount",
+                NVL(c.TRADE_COUNT,0) as "accumulateTradeCount",
+            </if>
+            NVL(n.TRADE_AMOUNT,0) as   "tradeAmount",
+            NVL(n.REFUND_AMOUNT,0) as  "refundAmount",
+            NVL(n.REVERSE_AMOUNT,0) as  "reverseAmount",
+            NVL(l.TRADE_AMOUNT,0) as   "preTradeAmount",
+            NVL(l.REFUND_AMOUNT,0)   "preRefundAmount",
+            NVL(n.TRADE_COUNT,0) as   "tradeCount",
+            NVL(n.REFUND_COUNT,0) as  "refundCount",
+            NVL(n.REVERSE_COUNT,0) as  "reverseCount",
+            NVL(l.TRADE_COUNT,0) as   "preTradeCount",
+            NVL(l.REFUND_COUNT,0)   "preRefundCount" 
+        FROM (SELECT COUNT_TIME,
+                    <include refid="dynamicBasicColWithoutNSql"></include>
+                    SUM(TRADE_AMOUNT) TRADE_AMOUNT,
+                    SUM(REFUND_AMOUNT) REFUND_AMOUNT,
+                    SUM(REVERSE_AMOUNT) REVERSE_AMOUNT,
+                    SUM(TRADE_COUNT) TRADE_COUNT,
+                    SUM(REFUND_COUNT) REFUND_COUNT,
+                    SUM(REVERSE_COUNT) REVERSE_COUNT 
+                FROM 
+                <include refid="tableJudgeSql"></include>
+                <include refid="TransQueryConditionSQL" />
+                GROUP BY COUNT_TIME
+                <include refid="TransQueryGroupSQL"></include>
+                ) n
+                LEFT JOIN
+            (SELECT  NEXT_COUNT_TIME,
+                    <include refid="dynamicSimpleBasicColSql"></include>
+                    SUM(TRADE_AMOUNT) TRADE_AMOUNT,
+                    SUM(REFUND_AMOUNT) REFUND_AMOUNT,
+                    SUM(TRADE_COUNT) TRADE_COUNT,
+                    SUM(REFUND_COUNT) REFUND_COUNT 
+                FROM 
+                <include refid="tableJudgeSql"></include> 
+                <include refid="PreTransQueryConditionSQL" />
+                GROUP BY NEXT_COUNT_TIME
+                <include refid="TransQueryGroupSQL"></include>
+                ) l
+                ON n.COUNT_TIME = l.NEXT_COUNT_TIME 
+                <include refid="TransJoinConditionSql"></include>
+                <if test="channelId == '_TOTAL' and mchNo == '_TOTAL' and groupno == '_TOTAL'">
+                        LEFT JOIN
+                    (SELECT  COUNT_TIME,
+                            <include refid="dynamicSimpleBasicColSql"></include>
+                            SUM(TRADE_AMOUNT) TRADE_AMOUNT,
+                            SUM(TRADE_COUNT) TRADE_COUNT  
+                        FROM BI_ACCEPT_ORG_TRANS_CUMULATE 
+                        <include refid="TransQueryConditionSQL_Cumulate" />
+                        GROUP BY COUNT_TIME 
+                        <include refid="TransQueryGroupSQL"></include>
+                        ) c
+                        ON n.COUNT_TIME = c.COUNT_TIME 
+                        <include refid="TransJoinConditionSql_2"></include>
+                </if>
+        ORDER BY "countTime" DESC,"tradeAmount" DESC 
+</sql>
+
+<sql id="dynamicOutestBasicColSql">
+    <if test="acceptOrgId != '_TOTAL'">
+            n.ACCEPT_ORG_ID,
+            (case when n.ACCEPT_ORG_ID='-' then '其他' else n.ACCEPT_ORG_NAME end) as ACCEPT_ORG_NAME,
+    </if>
+    <if test="channelId != '_TOTAL'">
+            n.CHANNEL_ID,
+            n.CHANNEL_NAME CHANNEL_NAME,
+    </if>
+    <if test="mchNo != '_TOTAL'">
+            n.MCH_NO,
+            n.MCH_NAME MCH_NAME,
+    </if>
+    <if test="groupno != '_TOTAL'">
+            n.GROUPNO AS GROUPNO,
+            n.GROUP_NAME AS GROUP_NAME,
+    </if>
+</sql>
+
+
+<sql id="dynamicBasicColWithoutNSql">
+    <if test="acceptOrgId != '_TOTAL'">
+            ACCEPT_ORG_ID,
+            MAX(ACCEPT_ORG_NAME) AS ACCEPT_ORG_NAME,
+    </if>
+    <if test="channelId != '_TOTAL'">
+            CHANNEL_ID,
+            MAX(CHANNEL_NAME) AS CHANNEL_NAME,
+    </if>
+    <if test="mchNo != '_TOTAL'">
+            MCH_NO,
+            MAX(MCH_NAME) AS MCH_NAME,
+    </if>
+    <if test="groupno != '_TOTAL'">
+        GROUPNO,
+        MAX(GROUP_NAME) AS GROUP_NAME,
+    </if>
+</sql>
+
+
+<sql id="tableJudgeSql">
+        <if test="(mchNo != '_TOTAL' or groupno != '_TOTAL' or accWay != '_TOTAL' or partner!='_TOTAL') and analyzeType!=3">
+        BI_MCH_TRANS_COUNT_D 
+        </if>
+        <if test="mchNo == '_TOTAL' and groupno == '_TOTAL' and accWay == '_TOTAL' and partner=='_TOTAL' and analyzeType!=3">
+        <choose>
+            <when test="(penetrate == 2 or penetrate == 3) and channelId!='_TOTAL' ">
+                BI_CHN_TRANS_SUM_D
+            </when>
+            <otherwise>
+                BI_CHANNEL_TRANS_COUNT_D
+            </otherwise>
+        </choose>
+        </if>
+        <if test="analyzeType==3">
+        <choose>
+            <when test="(penetrate == 2 or penetrate == 3) and channelId!='_TOTAL' and mchNo == '_TOTAL' and groupno == '_TOTAL' ">
+                BI_CHN_TRANS_SUM_D0
+            </when>
+            <when test="mchNo == '_TOTAL' and groupno == '_TOTAL'">
+                BI_CHN_TRANS_COUNT_D0 
+            </when>
+            <otherwise>
+                BI_MCH_TRANS_COUNT_D0 
+            </otherwise>
+        </choose>
+        </if>
+</sql>
+
+<sql id="TransQueryConditionSQL">
+    <where>
+        <if test="beginTime != null">
+            AND COUNT_TIME <![CDATA[>=]]> #{beginTime}
+        </if>
+        <if test="endTime != null">
+            AND COUNT_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="beginMonth != null">
+            AND COUNT_TIME <![CDATA[>=]]> #{beginMonth}
+        </if>
+        <if test="endMonth != null">
+            AND COUNT_TIME <![CDATA[<=]]> #{endMonth}
+        </if>
+        <include refid="TransQueryConditionPart_1"/>
+    </where>
+</sql>
+
+
+<sql id="TransQueryGroupSQL" >
+        <if test="acceptOrgId != '_TOTAL'">
+            ,ACCEPT_ORG_ID
+        </if>
+        <if test="dcType != '_TOTAL'">
+            ,DC_TYPE
+        </if>
+        <if test="channelId != '_TOTAL'">
+            ,CHANNEL_ID
+        </if>
+        <if test="mchNo != '_TOTAL'">
+            ,MCH_NO
+        </if>
+        <if test="groupno != '_TOTAL'">
+            ,GROUPNO
+        </if>
+        <if test="payProvideId != '_TOTAL'">
+            ,PAY_PROVIDE_ID
+        </if>
+        <if test="centerId != '_TOTAL'">
+            ,PAY_CENTER_ID
+        </if>
+        <if test="payTradeType != '_TOTAL'">
+            ,CENTER_ID
+        </if>
+        <if test="advanceSideId != '_TOTAL'">
+            ,ADVANCE_SIDE_ID
+        </if>
+        <if test="accWay != '_TOTAL'">
+            ,ACC_WAY
+        </if>
+        <if test="partner != '_TOTAL'">
+            ,PARTNER
+        </if>
+</sql>
+
+
+<sql id="dynamicSimpleBasicColSql">
+    <if test="acceptOrgId != '_TOTAL'">
+            ACCEPT_ORG_ID, 
+    </if>
+    <if test="channelId != '_TOTAL'">
+            CHANNEL_ID,
+    </if>
+    <if test="mchNo != '_TOTAL'">
+            MCH_NO,
+    </if>
+    <if test="groupno != '_TOTAL'">
+            GROUPNO,
+    </if>
+</sql>
+
+<sql id="PreTransQueryConditionSQL">
+    <where>
+        <if test="beginTime != null">
+            AND NEXT_COUNT_TIME <![CDATA[>=]]> #{beginTime}
+        </if>
+        <if test="endTime != null">
+            AND NEXT_COUNT_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="beginMonth != null">
+            AND NEXT_COUNT_TIME <![CDATA[>=]]> #{beginMonth}
+        </if>
+        <if test="endMonth != null">
+            AND NEXT_COUNT_TIME <![CDATA[<=]]> #{endMonth}
+        </if>
+        <include refid="TransQueryConditionPart_1"/>
+    </where>
+</sql>
+
+
+<sql id="TransJoinConditionSql">
+    <if test="acceptOrgId != '_TOTAL'">
+        AND n.ACCEPT_ORG_ID = l.ACCEPT_ORG_ID
+    </if>
+    <if test="channelId != '_TOTAL'">
+        AND n.CHANNEL_ID = l.CHANNEL_ID 
+    </if>
+    <if test="mchNo != '_TOTAL'">
+        AND n.MCH_NO = l.MCH_NO 
+    </if>
+    <if test="groupno != '_TOTAL'">
+        AND n.GROUPNO = l.GROUPNO 
+    </if>
+</sql>
+
+
+<sql id="dynamicSimpleBasicColSql">
+    <if test="acceptOrgId != '_TOTAL'">
+            ACCEPT_ORG_ID, 
+    </if>
+    <if test="channelId != '_TOTAL'">
+            CHANNEL_ID,
+    </if>
+    <if test="mchNo != '_TOTAL'">
+            MCH_NO,
+    </if>
+    <if test="groupno != '_TOTAL'">
+            GROUPNO,
+    </if>
+</sql>
+
+
+<sql id="TransQueryConditionSQL_Cumulate">
+    <where>
+        <if test="beginTime != null">
+            AND COUNT_TIME <![CDATA[>=]]> #{beginTime}
+        </if>
+        <if test="endTime != null">
+            AND COUNT_TIME <![CDATA[<=]]> #{endTime}
+        </if>
+        <if test="beginMonth != null">
+            AND COUNT_TIME <![CDATA[>=]]> #{beginMonth}
+        </if>
+        <if test="endMonth != null">
+            AND COUNT_TIME <![CDATA[<=]]> #{endMonth}
+        </if>
+        <include refid="TransQueryConditionPart_1_1"/>
+    </where>
+</sql>
+
+
+<sql id="TransQueryGroupSQL" >
+        <if test="acceptOrgId != '_TOTAL'">
+            ,ACCEPT_ORG_ID
+        </if>
+        <if test="dcType != '_TOTAL'">
+            ,DC_TYPE
+        </if>
+        <if test="channelId != '_TOTAL'">
+            ,CHANNEL_ID
+        </if>
+        <if test="mchNo != '_TOTAL'">
+            ,MCH_NO
+        </if>
+        <if test="groupno != '_TOTAL'">
+            ,GROUPNO
+        </if>
+        <if test="payProvideId != '_TOTAL'">
+            ,PAY_PROVIDE_ID
+        </if>
+        <if test="centerId != '_TOTAL'">
+            ,PAY_CENTER_ID
+        </if>
+        <if test="payTradeType != '_TOTAL'">
+            ,CENTER_ID
+        </if>
+        <if test="advanceSideId != '_TOTAL'">
+            ,ADVANCE_SIDE_ID
+        </if>
+        <if test="accWay != '_TOTAL'">
+            ,ACC_WAY
+        </if>
+        <if test="partner != '_TOTAL'">
+            ,PARTNER
+        </if>
+</sql>
+
+<sql id="TransJoinConditionSql_2">
+    <if test="acceptOrgId != '_TOTAL'">
+        AND n.ACCEPT_ORG_ID = c.ACCEPT_ORG_ID
+    </if>
+    <if test="channelId != '_TOTAL'">
+        AND n.CHANNEL_ID = c.CHANNEL_ID
+    </if>
+    <if test="mchNo != '_TOTAL'">
+        AND n.MCH_NO = c.MCH_NO 
+    </if>
+</sql>
