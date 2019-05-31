@@ -1,0 +1,339 @@
+<select id="pagingQueryXXX" parameterType="XXX" resultMap="XXXModleResult">
+    SELECT -1 examin_status, T.account_id,
+        T.org_id,
+        T.account_code,
+        T.bank_id,
+        T.account_name,
+        T.account_type,
+        T.contact_line,
+        T.REMIT_ACCOUNT_CODE,
+        T.IS_INLINE,
+        T.BANK_NAME,
+        T.PROVINCE,
+        T.CITY,
+        T.ID_CARD_TYPE,
+        T.ID_CARD,
+        T.TEL,
+        T.EXAMINE_STATUS,
+        T.EXAMINE_TIME,
+        T.EXAMINE_STATUS_REMARK,
+        T.EXAMINE_EMP,
+        T.ENABLED,
+        T.DATA_SIGN,
+        T.DATA_SOURCE,
+        T.FLD_S1,
+        T.FLD_S2,
+        T.FLD_S3,
+        T.FLD_N1,
+        T.FLD_N2,
+        T.FLD_N3,
+        T.FLD_D1,
+        T.CREATE_USER,
+        T.CREATE_EMP,
+        T.CREATE_TIME,
+        T.UPDATE_TIME,
+        T.ADDRESS,
+        T.CHECK_AUTH,
+        T.E_ACCOUNT_CODE,
+        T.ACCOUNT_EN_NAME,
+        T.ACCOUNT_EXPIRED_DATE,
+        T.ACCOUNT_POSTCODE,
+        T.CHECK_AUTH3,
+        T.CHECK_AUTH4,
+        T.E_ACCOUNT_ENABLED, t4.bank_name bankIdName, t5.type_name account_type_name, t7.org_type,t7.org_name FROM TRA_BANK_ACCOUNT t
+    left join cms_bank t4 on t.bank_id = t4.bank_id
+    left join cms_sys_type t5 on t.account_type = t5.type_code and t5.type_class = 'ACCOUNT_TYPE'
+    left join cms_org_relation t7 on t7.org_id = t.org_id
+    <if test="accWay != null">
+        left join cms_merchant t6 on t.org_id = t6.merchant_id
+    </if>
+    <if test="orgType != null and orgType == 1">
+        left join cms_channel t1 on t.org_id = t1.channel_id
+        left join cms_merchant t2 on t.org_id = t2.merchant_id
+    </if>
+    <if test="orgType != null and orgType == 2 and userType != null and (userType == 1 or userType == 2)">
+        INNER JOIN
+        (SELECT t1.channel_id org_id
+        FROM cms_channel t1
+        WHERE t1.channel_type = 2
+        START WITH t1.channel_id = #{orgId}
+        CONNECT BY PRIOR t1.channel_id = t1.parent_channel
+        UNION
+        SELECT t2.merchant_id org_id
+        FROM cms_merchant t2
+        INNER JOIN (SELECT t10.channel_id
+        FROM cms_channel t10
+        WHERE t10.channel_type = 2
+        START WITH t10.channel_id = #{orgId}
+        CONNECT BY PRIOR t10.channel_id = t10.parent_channel) t11 ON t2.CHANNEL_ID = t11.CHANNEL_ID) t12
+        ON t.org_id = t12.org_id
+    </if>
+    <if test="orgType != null and orgType == 2 and userType != null and userType == 4">
+        inner join (select t1.CHANNEL_ID org_id from CMS_CHANNEL t1 where t1.CHANNEL_ID = #{orgId}
+        UNION
+        select t2.MERCHANT_ID org_id from CMS_MERCHANT t2
+        INNER JOIN (SELECT t8.emp_id FROM cms_emp t8
+        WHERE t8.org_id = #{orgId} AND t8.PHYSICS_FLAG = 1) t9 ON t2.SALESMAN_ID = t9.emp_id) t10
+        on t.org_id = t10.org_id
+    </if>
+    <if test="orgType != null and (orgType == 11 or orgType == 12 or orgType == 13 or orgType == 14)">
+        inner join cms_merchant t2 on t.org_id = t2.merchant_id
+    </if>
+    <if test="orgType != null and orgType == 31">
+        inner join cms_merchant t2 on t.org_id = t2.merchant_id
+        inner join (select t3.dept_id from cms_dept t3
+        start with t3.dept_id = #{orgId}
+        connect by prior t3.dept_id = t3.parent_dept) t7
+        on t2.dept_id = t7.dept_id
+    </if>
+    <where>
+        <if test="accountId != null and accountId != ''">
+            AND t.ACCOUNT_ID = #{accountId}
+        </if>
+        <if test="bankId != null">
+            AND t.BANK_ID = #{bankId}
+        </if>
+        <if test="merchantId != null and merchantId != ''">
+            AND t.org_id = #{merchantId}
+        </if>
+        <if test="beginCreateTime != null">
+            AND t.create_time <![CDATA[>=]]> #{beginCreateTime}
+        </if>
+        <if test="endCreateTime != null">
+            AND t.create_time <![CDATA[<=]]> #{endCreateTime}
+        </if>
+        <if test="accountCode != null and accountCode != ''">
+            AND t.ACCOUNT_CODE = #{accountCode}
+        </if>
+        <if test="accountType != null">
+            AND t.ACCOUNT_TYPE = #{accountType}
+        </if>
+        <if test="accountName != null and accountName != ''">
+            AND t.ACCOUNT_NAME like '%'||#{accountName}||'%'
+        </if>
+        <if test="bankName != null and bankName != ''">
+            AND t.BANK_NAME like '%'||#{bankName}||'%'
+        </if>
+        <if test="accountStatus != null and accountStatus==0">
+            AND t.FLD_N2 IS NULL
+        </if>
+        <if test="accountStatus != null and accountStatus > 0">
+            AND t.FLD_N2 = #{accountStatus}
+        </if>
+        <if test="accWay != null">
+            AND t6.acc_way = #{accWay}
+        </if>
+        <if test="merchantType != null">
+            AND t7.ORG_TYPE = #{merchantType}
+        </if>
+        <if test="orgName != null and orgName != ''">
+            AND t7.ORG_NAME like '%'||#{orgName}||'%'
+        </if>
+        AND 1 = 1
+        <choose>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 0">
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 1">
+                AND (t1.pay_accpet_org = #{orgId} or t2.pay_accpet_org = #{orgId})
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 2 and userType != null and (userType == 1 or userType == 2)">
+
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 2 and userType != null and userType == 4">
+
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 11">
+                AND (t2.PARENT_MERCHANT = #{orgId} OR t2.MERCHANT_ID = #{orgId})
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and (orgType == 12 or orgType == 13 or orgType == 14)">
+                AND t2.MERCHANT_ID = #{orgId}
+            </when>
+            <!-- xxx -->
+            <when test="orgType != null and orgType == 31">
+
+            </when>
+            <!-- xxx -->
+            <otherwise>
+                AND 1 != 1
+            </otherwise>
+        </choose>
+    </where>
+    
+    <if test="enabledExamineQuery !=null">
+        UNION ALL
+        <!-- xxx -->
+        SELECT T.AUDIT_STATUS examin_status,
+        T.account_id,
+        T.org_id,
+        T.account_code,
+        T.bank_id,
+        T.account_name,
+        T.account_type,
+        T.contact_line,
+        T.REMIT_ACCOUNT_CODE,
+        T.IS_INLINE,
+        T.BANK_NAME,
+        T.PROVINCE,
+        T.CITY,
+        T.ID_CARD_TYPE,
+        T.ID_CARD,
+        T.TEL,
+        T.EXAMINE_STATUS,
+        T.EXAMINE_TIME,
+        T.EXAMINE_STATUS_REMARK,
+        T.EXAMINE_EMP,
+        T.ENABLED,
+        T.DATA_SIGN,
+        T.DATA_SOURCE,
+        T.FLD_S1,
+        T.FLD_S2,
+        T.FLD_S3,
+        T.FLD_N1,
+        T.FLD_N2,
+        T.FLD_N3,
+        T.FLD_D1,
+        T.CREATE_USER,
+        T.CREATE_EMP,
+        T.CREATE_TIME,
+        T.UPDATE_TIME,
+        T.ADDRESS,
+        T.CHECK_AUTH,
+        T.E_ACCOUNT_CODE,
+        T.ACCOUNT_EN_NAME,
+        T.ACCOUNT_EXPIRED_DATE,
+        T.ACCOUNT_POSTCODE,
+        T.CHECK_AUTH3,
+        T.CHECK_AUTH4,
+        T.E_ACCOUNT_ENABLED, t4.bank_name bankIdName, t5.type_name account_type_name, t7.org_type,t7.org_name FROM TRA_BANK_ACCOUNT_EXAMINE t
+        left join cms_bank t4 on t.bank_id = t4.bank_id
+        left join cms_sys_type t5 on t.account_type = t5.type_code and t5.type_class = 'ACCOUNT_TYPE'
+        left join cms_org_relation t7 on t7.org_id = t.org_id
+        <if test="accWay != null">
+            left join cms_merchant t6 on t.org_id = t6.merchant_id
+        </if>
+        <if test="orgType != null and orgType == 1">
+            left join cms_channel t1 on t.org_id = t1.channel_id
+            left join cms_merchant t2 on t.org_id = t2.merchant_id
+        </if>
+        <if test="orgType != null and orgType == 2 and userType != null and (userType == 1 or userType == 2)">
+            INNER JOIN
+            (SELECT t1.channel_id org_id
+            FROM cms_channel t1
+            WHERE t1.channel_type = 2
+            START WITH t1.channel_id = #{orgId}
+            CONNECT BY PRIOR t1.channel_id = t1.parent_channel
+            UNION
+            SELECT t2.merchant_id org_id
+            FROM cms_merchant t2
+            INNER JOIN (SELECT t10.channel_id
+            FROM cms_channel t10
+            WHERE t10.channel_type = 2
+            START WITH t10.channel_id = #{orgId}
+            CONNECT BY PRIOR t10.channel_id = t10.parent_channel) t11 ON t2.CHANNEL_ID = t11.CHANNEL_ID) t12
+            ON t.org_id = t12.org_id
+        </if>
+        <if test="orgType != null and orgType == 2 and userType != null and userType == 4">
+            inner join (select t1.CHANNEL_ID org_id from CMS_CHANNEL t1 where t1.CHANNEL_ID = #{orgId}
+            UNION
+            select t2.MERCHANT_ID org_id from CMS_MERCHANT t2
+            INNER JOIN (SELECT t8.emp_id FROM cms_emp t8
+            WHERE t8.org_id = #{orgId} AND t8.PHYSICS_FLAG = 1) t9 ON t2.SALESMAN_ID = t9.emp_id) t10
+            on t.org_id = t10.org_id
+        </if>
+        <if test="orgType != null and (orgType == 11 or orgType == 12 or orgType == 13 or orgType == 14)">
+            inner join cms_merchant t2 on t.org_id = t2.merchant_id
+        </if>
+        <if test="orgType != null and orgType == 31">
+            inner join cms_merchant t2 on t.org_id = t2.merchant_id
+            inner join (select t3.dept_id from cms_dept t3
+            start with t3.dept_id = #{orgId}
+            connect by prior t3.dept_id = t3.parent_dept) t7
+            on t2.dept_id = t7.dept_id
+        </if>
+        <where>
+            AND (t.AUDIT_STATUS = 2 OR t.AUDIT_STATUS = 4)
+            <if test="accountId != null and accountId != ''">
+                AND t.ACCOUNT_ID = #{accountId}
+            </if>
+            <if test="bankId != null">
+                AND t.BANK_ID = #{bankId}
+            </if>
+            <if test="merchantId != null and merchantId != ''">
+                AND t.org_id = #{merchantId}
+            </if>
+            <if test="beginCreateTime != null">
+                AND t.create_time <![CDATA[>=]]> #{beginCreateTime}
+            </if>
+            <if test="endCreateTime != null">
+                AND t.create_time <![CDATA[<=]]> #{endCreateTime}
+            </if>
+            <if test="accountCode != null and accountCode != ''">
+                AND t.ACCOUNT_CODE = #{accountCode}
+            </if>
+            <if test="accountType != null">
+                AND t.ACCOUNT_TYPE = #{accountType}
+            </if>
+            <if test="accountName != null and accountName != ''">
+                AND t.ACCOUNT_NAME like '%'||#{accountName}||'%'
+            </if>
+            <if test="bankName != null and bankName != ''">
+                AND t.BANK_NAME like '%'||#{bankName}||'%'
+            </if>
+            <if test="accountStatus != null and accountStatus==0">
+                AND t.FLD_N2 IS NULL
+            </if>
+            <if test="accountStatus != null and accountStatus > 0">
+                AND t.FLD_N2 = #{accountStatus}
+            </if>
+            <if test="accWay != null">
+                AND t6.acc_way = #{accWay}
+            </if>
+            <if test="merchantType != null">
+                AND t7.ORG_TYPE = #{merchantType}
+            </if>
+            <if test="orgName != null and orgName != ''">
+                AND t7.ORG_NAME like '%'||#{orgName}||'%'
+            </if>
+            AND 1 = 1
+            <choose>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 0">
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 1">
+                    AND (t1.pay_accpet_org = #{orgId} or t2.pay_accpet_org = #{orgId})
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 2 and userType != null and (userType == 1 or userType == 2)">
+
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 2 and userType != null and userType == 4">
+
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 11">
+                    AND (t2.PARENT_MERCHANT = #{orgId} OR t2.MERCHANT_ID = #{orgId})
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and (orgType == 12 or orgType == 13 or orgType == 14)">
+                    AND t2.MERCHANT_ID = #{orgId}
+                </when>
+                <!-- xxx -->
+                <when test="orgType != null and orgType == 31">
+
+                </when>
+                <!-- xxx -->
+                <otherwise>
+                    AND 1 != 1
+                </otherwise>
+            </choose>
+        </where>
+    </if>
+</select>
