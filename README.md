@@ -15,7 +15,7 @@
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0520/154609_e88c976b_1899542.png "200-霸王洗发水.png")
 
- **猫王收音机**   
+ **猫王蓝牙音箱**   
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0524/104605_3b1116be_1899542.jpeg "300-猫王收音机.jpg")
 
  **花生壳盒子**   
