@@ -100,6 +100,10 @@
 
  **5月29日** 恭喜  jspp  ：[大神留步，帮我看个问题](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadCode.java)   获得   **码云官方T恤+霸王生发套装**   
    
- **5月30日** 恭喜  weijiangbo  ：[我蒙了，一样的取法为啥获取不到值](https://gitee.com/oschina/bullshit-codes/blob/master/java/ColourType.java)   获得   **码云官方T恤+霸王生发套装**     
+ **5月30日** 恭喜  weijiangbo  ：[我蒙了，一样的取法为啥获取不到值](https://gitee.com/oschina/bullshit-codes/blob/master/java/ColourType.java)   获得   **码云官方T恤+霸王生发套装**   
+  
+ **5月30日** 恭喜  tandy  ：[刚写完的排序算法就被开除了](https://gitee.com/oschina/bullshit-codes/blob/master/java/ArraySort.java)   获得   **码云官方T恤+霸王生发套装**  
+   
+ 同时再次恭喜本周评论人数最多的作品「[论StringBuffer的使用](https://gitee.com/oschina/bullshit-codes/blob/master/java/Append.java)」获得  **码云巨型鼠标垫** 
    
 ps：感谢大家投稿，小编已淹没在垃圾代码的汪洋大海里，虽然有很多的优秀作品，但是我们的规则还是每天推出一个作品，所以没获奖的小伙伴不要着急喔，下一个可能就是你：）
