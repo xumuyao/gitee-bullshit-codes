@@ -102,7 +102,7 @@
    
  **5月30日** 恭喜  weijiangbo  ：[我蒙了，一样的取法为啥获取不到值](https://gitee.com/oschina/bullshit-codes/blob/master/java/ColourType.java)   获得   **码云官方T恤+霸王生发套装**   
   
- **5月30日** 恭喜  tandy  ：[刚写完的排序算法就被开除了](https://gitee.com/oschina/bullshit-codes/blob/master/java/ArraySort.java)   获得   **码云官方T恤+霸王生发套装**  
+ **5月31日** 恭喜  tandy  ：[刚写完的排序算法就被开除了](https://gitee.com/oschina/bullshit-codes/blob/master/java/ArraySort.java)   获得   **码云官方T恤+霸王生发套装**  
    
  同时再次恭喜本周评论人数最多的作品「[论StringBuffer的使用](https://gitee.com/oschina/bullshit-codes/blob/master/java/Append.java)」获得  **码云巨型鼠标垫** 
    
