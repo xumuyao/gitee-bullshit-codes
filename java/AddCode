@@ -1,0 +1,8 @@
+public class AddCode {
+
+    public static void main(String[] args) {
+
+        System.out.println(1 + 5 / 2 + 2 > 5);
+        //为什么会是false
+    }
+    }
