@@ -1,0 +1,3 @@
+//C语言杀人秘技,令人防不胜防
+#define true false
+#define false true
