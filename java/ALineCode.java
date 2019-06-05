@@ -5,7 +5,7 @@ public class B {
 
 
     public static void main(String[] args)  {
-        System.out.println(isTwoPower(16));
+        System.out.println(isTwoPower(15));
     }
 
     /**
@@ -13,7 +13,7 @@ public class B {
      * @param n
      * @return
      */
-    public static boolean isTwoPower(int n){
+    public static boolean isTwo(int n){
         return (n & n-1) == 0;
     }
 
