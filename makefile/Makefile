@@ -6,6 +6,6 @@ PATHOBJ=$(PATHPWD)/obj
 
 
 clean:
-        rm -rf $(PATHBIN)/* $(PATHBIN)/* $(PATHOBJ)/*
+        rm -rf $(PATHBIN)/* $(PATHLIB)/* $(PATHOBJ)/*
 
 # 在编译服务器上执行make clean 以后可以跑路了
