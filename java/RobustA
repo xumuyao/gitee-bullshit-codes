@@ -1,0 +1,19 @@
+public class RobustA {
+
+    /**
+     * 这段代码异常健壮
+     */
+    public boolean test() {
+
+        //随便写了循环条件
+        while (true) {
+            try {
+                //业务处理代码
+            } catch (Exception e) {
+                //抓到异常，不处理，继续跑
+                continue ;
+            }
+        }
+
+    }
+}
