@@ -112,6 +112,12 @@
 
 **6月5日** 恭喜  誓言  ：[为了后期优化查询速度你就先休眠一会吧](https://gitee.com/oschina/bullshit-codes/blob/master/java/Sleep.java)   获得   **码云官方T恤+霸王生发套装**   
   
-**6月6日** 恭喜  看着星空的状态  ：[这个try catch可以再大一点~](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadTry.java)   获得   **码云官方T恤+霸王生发套装** 
+**6月6日** 恭喜  看着星空的状态  ：[这个try catch可以再大一点~](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadTry.java)   获得   **码云官方T恤+霸王生发套装**   
+  
+**6月7日** 恭喜  shuzheng  ：[Arrays.asList() 教你重新做人](https://gitee.com/oschina/bullshit-codes/blob/master/java/FuckArrays)   获得   **码云官方T恤+霸王生发套装**   
+  
+同时再次恭喜本周评论人数最多的作品[为了后期优化查询速度你就先休眠一会吧](https://gitee.com/oschina/bullshit-codes/blob/master/java/Sleep.java)  获得  **码云巨型鼠标垫**   
+  
+  
    
 ps：感谢大家投稿，小编已淹没在垃圾代码的汪洋大海里，虽然有很多的优秀作品，但是我们的规则还是每天推出一个作品，所以没获奖的小伙伴不要着急喔，下一个可能就是你：）
