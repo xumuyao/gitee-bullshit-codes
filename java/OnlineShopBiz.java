@@ -1,8 +1,7 @@
 /**
  * 线上店铺表
  *
- * @author rexlin600
- * @email 3072054267@qq.com
+ * @author 逻辑鬼才
  * @date 2018-11-06 19:01:04
  */
 @SuppressWarnings("ALL")
