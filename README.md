@@ -117,6 +117,8 @@
 **6月7日** 恭喜  shuzheng  ：[Arrays.asList() 教你重新做人](https://gitee.com/oschina/bullshit-codes/blob/master/java/FuckArrays)   获得   **码云官方T恤+霸王生发套装**   
   
 同时再次恭喜本周评论人数最多的作品[为了后期优化查询速度你就先休眠一会吧](https://gitee.com/oschina/bullshit-codes/blob/master/java/Sleep.java)  获得  **码云巨型鼠标垫**   
+
+**6月10日** 恭喜  Try  ：[入职第一天 老板说先优化下网站卡顿, 然后发现了它](https://gitee.com/oschina/bullshit-codes/blob/master/php/%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%A4%A9.php)   获得   **码云官方T恤+霸王生发套装**  
   
   
    
