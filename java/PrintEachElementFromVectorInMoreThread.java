@@ -9,7 +9,7 @@ import java.util.concurrent.CyclicBarrier;
  *      我们都知道，在多线程场景下不能使用ArrayList，应该用Vector，因为别人都告诉我们Vector是线程安全的。
  *      但其实，这里是有坑的！！！>_<啊啊啊啊啊啊啊啊啊~
  *
- *      代码发到生产环境后却发现总是报错：java.util.ConcurrentModificationException
+ *      代码发到生产环境后却发现经常报错：java.util.ConcurrentModificationException
  *
  *      例如在下面的代码中，遍历容器 Vector只是简单的把每个元素打印出来，这就存在并发问题。
  *      那么个问题如何修改呢？大家可以试一下。
