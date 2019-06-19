@@ -1,0 +1,74 @@
+@RequestMapping(value = "/list", method = RequestMethod.POST)
+public Response<Object> questionList(@RequestBody JSONObject param) throws UnsupportedEncodingException {
+		if(param.size()==0){
+			return new Response<>("0", "参数不能为空");
+		}
+		if(param.get("userToken")==null||StringUtils.isBlank(param.get("userToken").toString())){
+			return new Response<>("0", "userToken不能为空");
+		}
+		//解密：获取用户信息
+		String aesDecrypt = AesDecrypt.aesDecrypt(param.get("userToken").toString());
+		if(StringUtils.isEmpty(aesDecrypt)){
+			return new Response<>("0", "用户令牌错误");
+		}
+		try {
+			if(StringUtils.isNumeric(String.valueOf(param.get("pageNo")))
+					&&StringUtils.isNumeric(String.valueOf(param.get("numPerPage")))) {
+				if(Long.valueOf(param.get("pageNo").toString())>0&&Long.valueOf(param.get("numPerPage").toString())>0){
+					param.put("numPerPage", param.get("numPerPage").toString());
+					param.put("pageNo",String.valueOf(Long.valueOf(param.get("pageNo").toString())-1));
+				}else{
+					param.put("numPerPage","10");
+					param.put("pageNo", "0");
+				}
+			}else{//默认从第一页开始，每页10条
+				param.put("numPerPage","10");
+				param.put("pageNo", "0");
+			}
+		}catch (Exception e) {
+			param.put("numPerPage","10");
+			param.put("pageNo", "0");
+		}
+		JSONObject user = JSONObject.fromObject(aesDecrypt);
+		String accessToken=user.get("access_token").toString();
+		String branchCode=user.get("branchCode").toString();
+		String uid=user.get("userId").toString();
+		param.remove("userToken");
+		
+		String result=HttpUtil.postURL(v.getQuestionList, param.toString(), "UTF-8", accessToken, code, uid);
+		JSONObject pageInfo=new JSONObject();
+		if(StringUtils.isNotEmpty(result)&&(JSONObject.fromObject(result).getJSONObject("pageInfo")!=null&&
+				!JSONObject.fromObject(result).getJSONObject("pageInfo").equals(null))){
+			pageInfo=JSONObject.fromObject(result).getJSONObject("pageInfo");
+		}
+		/*param.put("numPerPage","10000");
+		param.put("pageNo", "0");//所有题总共7448个
+*/		String resultAll=HttpUtil.postURL(v.getQuestionList, param.toString(), "UTF-8", accessToken, code, uid);
+		JSONObject pageInfoAll=new JSONObject();
+		if(StringUtils.isNotEmpty(resultAll)&&(JSONObject.fromObject(resultAll).getJSONObject("pageInfo")!=null&&
+				!JSONObject.fromObject(resultAll).getJSONObject("pageInfo").equals(null))){
+			pageInfoAll=JSONObject.fromObject(resultAll).getJSONObject("pageInfo");
+		}
+		
+		List<Map<String, Object>> list=new ArrayList<Map<String, Object>>();
+		Map<String, Object> mapAll = new HashMap<String, Object>();
+		if(pageInfo!=null&&pageInfo.size()>0){
+			JSONArray paperArray=pageInfo.getJSONArray("list");
+			System.out.println(paperArray.size());
+			for (int i = 0; i < paperArray.size(); i++){
+				Map<String, Object> map=new HashMap<String, Object>();
+				JSONObject qObj=JSONObject.fromObject(paperArray.get(i).toString());
+				map.put("id",qObj.get("questionId"));//获取试卷id
+				String title=qObj.getString("title").replace("src=\"", "src=\""+v.ImgPrefix+"");
+				String type=qObj.getString("typelevel");
+				map.put("title", title);
+				map.put("type", type);
+				list.add(map);
+			}
+			//mapAll.put("count",pageInfoAll!=null?pageInfoAll.getJSONArray("list").size():"0");
+			mapAll.put("count", pageInfoAll.get("total")!=null? Long.parseLong(pageInfoAll.get("total").toString()):0);
+		}
+		mapAll.put("list", list);
+		
+		return new Response<>(mapAll);
+	}
