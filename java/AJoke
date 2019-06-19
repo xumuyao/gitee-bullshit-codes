@@ -1,0 +1,15 @@
+package lalala;
+
+
+public class AJoke {
+
+
+    public static void main(String[] args)  {
+        int a = args[0];
+        if(a>3 && a<5){
+            log.info("hahahahah");
+        }
+        //为什么不用4。。。。哈哈哈哈
+    }
+
+}
