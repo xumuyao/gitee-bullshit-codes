@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+void test(char * P){
+    p = (char *)mallco(sizeof(char)*100);
+}
+
+int main(){
+    char *t=NULL;
+    test(t);
+    //test函数运行结束后t并未分配内存，还是NULL
+    strcpy(t,"Hello");///出现段错误，因为t是NULL
+}
