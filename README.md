@@ -140,7 +140,9 @@
   
 **6月21日** 恭喜  残虹  ：[论一条语句写完整个报表的sql长度](https://gitee.com/oschina/bullshit-codes/blob/master/sql/report.sql)   获得   **码云官方T恤+霸王防脱套装**  
   
-同时再次恭喜本周评论人数最多的作品[静态异常，都准备好了，随时可以抛？](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadException.java)  获得  **码云巨型鼠标垫**  
+同时再次恭喜本周评论人数最多的作品[静态异常，都准备好了，随时可以抛？](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadException.java)  获得  **码云巨型鼠标垫**    
+  
+**6月24日** 恭喜  ksice  ：[试试简单的加减乘除](https://gitee.com/oschina/bullshit-codes/blob/master/java/AddCode)   获得   **码云官方T恤+霸王防脱套装** 
     
      
 ps：感谢大家投稿，小编已淹没在垃圾代码的汪洋大海里，虽然有很多的优秀作品，但是我们的规则还是每天推出一个作品，所以没获奖的小伙伴不要着急喔，下一个可能就是你：）
