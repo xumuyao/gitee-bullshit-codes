@@ -20,4 +20,37 @@ public final class BullishitClass {
 
         return userId;
     }
+    /**
+    * 示例二：获取车辆列表「大坑：第一条 sql 只是为了计算个总数据量。本来查询一次就够了百要查询两次」
+     *
+     * @return 分页数据
+     */
+    @Override
+    public Map<String, Object> demo2(JSONObject param) {
+
+        // 查询获取总数
+        List list1 = dao.queryForList("rentCar.getUserCars", param);
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("total", list1.size());
+        result.put("content", dao.queryForList("rentCar.getUserCarsJoinBrand", param));
+        return  result;
+    }
+
+    /**
+     * 示例三：数据入库「大坑：不使用批量插入，使用for 循环一条条处理」
+     *
+     */
+    @Override
+    public void demo3(JSONObject param) {
+
+        List<Map> priceList = (List<Map>) param.get("priceList");
+        for (Map map : priceList) {
+            map.putAll(param);
+            checkAddPriceRule(map);    // 调用数据校验方法
+
+            map.put("business_type",business_type);
+            map.put("description",description);
+            insertPriceRule(map);   // 调用插入数据库方法
+        }
+    }
 }
