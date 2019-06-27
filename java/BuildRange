@@ -1,0 +1,50 @@
+public class BuildRange{
+	
+	public static void main(String[] args) {
+		try {
+			int[] i = buildInt("2,3,4,6");
+			for(int s: i){
+				System.out.println(s);
+			}
+			
+			float[] f = buildFloat("-200,-60,20,300");
+			for(float s: f){
+				System.out.println(s);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/*
+	 * 将字串转为数值分段处理，供它处调用查找目标值所在区间
+	 * 如："-200,-60,20,300" 转换为 { -∞,-200,-60,20,300,∞ }
+	 * 依类型不同分为int和float两个方法
+	 * 代码删至最简可用
+	 */
+	
+	// for Int
+	public static int[] buildInt(String strInt){
+		String[] strs = strInt.split(",");
+		int[] rtnI = new int[strs.length+2];
+		for(int i=1;i<rtnI.length-1;i++){
+			rtnI[i] = Integer.parseInt(strs[i-1]);
+		}
+		rtnI[0] = Integer.MIN_VALUE;
+		rtnI[rtnI.length-1] = Integer.MAX_VALUE;
+		return rtnI;
+	}
+
+	// for Float
+	public static float[] buildFloat(String strFloat){
+		String[] strs = strFloat.split(",");
+		float[] rtnF = new float[strs.length+2];
+		for(int i=1;i<rtnF.length-1;i++){
+			rtnF[i] = Float.parseFloat(strs[i-1]);
+		}
+		rtnF[0] = Float.MIN_VALUE;
+		rtnF[rtnF.length-1] = Float.MAX_VALUE;
+		return rtnF;
+	}
+	
+}
