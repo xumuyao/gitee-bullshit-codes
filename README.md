@@ -62,9 +62,8 @@
 
 ### 活动时间
 
-此仓库作为收集坑爹代码的用途将长期进行。但在此期间（2019/5/27 ~ 2019/6/28)提交的作品将根据系统评选的结果，结合活动筹备组成员的评审，给获奖作品的作者颁发奖品，以及从 **评论** 中抽取 10名，随机赠予码云官方T恤+（个推马克杯、Tars公仔、简书笔记本、传智博客技术书籍等）礼品一份。
+此仓库作为收集坑爹代码的用途将长期进行。但在此期间（2019/5/27 ~ 2019/6/28)提交的作品将根据系统评选的结果，结合活动筹备组成员的评审，给获奖作品的作者颁发奖品，以及从 **评论** 中抽取 10名，随机赠予（码云官方T恤、个推马克杯、Tars公仔、简书笔记本、传智博客技术书籍等）礼品一份。
 
- 
 
  **周一到周五** 每天下午 18:00会在所有提交的作品中推出一个代码作品，送出 **码云官方T恤+霸王防脱套装** 一套。（作品不会重复推出） 
    
@@ -148,7 +147,14 @@
   
 **6月26日** 恭喜  非常君  ：[难怪每次系统挂掉，资源基本是让ORACLE占掉](https://gitee.com/oschina/bullshit-codes/blob/master/java/FeeServiceImpl.java)   获得   **码云官方T恤+霸王防脱套装**  
   
-**6月27日** 恭喜  倒霉狐狸  ：[添加神级ifelse使用方式](https://gitee.com/oschina/bullshit-codes/blob/master/php/IF_ELSE.php)   获得   **码云官方T恤+霸王防脱套装**  
-    
-     
-ps：感谢大家投稿，小编已淹没在垃圾代码的汪洋大海里，虽然有很多的优秀作品，但是我们的规则还是每天推出一个作品，所以没获奖的小伙伴不要着急喔，下一个可能就是你：）
+**6月27日** 恭喜  倒霉狐狸  ：[添加神级ifelse使用方式](https://gitee.com/oschina/bullshit-codes/blob/master/php/IF_ELSE.php)   获得   **码云官方T恤+霸王防脱套装** 。  
+  
+**6月28日** 恭喜  Joker  ：[我见过的字段设计](https://gitee.com/oschina/bullshit-codes/blob/master/sql/WechatIMG199.png)   获得   **码云官方T恤+霸王防脱套装**  
+  
+同时再次恭喜本周评论人数最多的作品 [手机号码验证](https://gitee.com/oschina/bullshit-codes/blob/master/java/PhoneRuleValidate.java)  获得  **码云巨型鼠标垫**  
+  
+最后恭喜本次坑爹代码大赛活动评论人数最多作品 [大神留步，帮我看个问题](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadCode.java) 喜提 **猫王收音机+花生壳盒子**  
+  
+【评论获奖将在19点前公布...】
+
+
