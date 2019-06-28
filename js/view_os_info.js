@@ -1,0 +1,37 @@
+/**
+ * Created by JamesView on 2019-06-28 14:44.
+ * 说明: 在node中运行你就可以看到自己的当前操作系统的所有信息,"灰常"的有用呢!
+ */
+var os = require("os");
+(function see(){
+    console.log("===================ViewOSInfo============================")
+    console.log("Computer-Name:"+os.hostname())
+    console.log("---------------------------------------------------------")
+    console.log("User home dir:"+os.homedir())
+    console.log("---------------------------------------------------------")
+    console.log("OS bit:"+os.arch())
+    console.log("---------------------------------------------------------")
+    console.log("OS platform:"+os.platform())
+    console.log("---------------------------------------------------------")
+    console.log("OS release:"+os.release())
+    console.log("---------------------------------------------------------")
+    console.log("OS tmpdir:"+os.tmpdir())
+    console.log("---------------------------------------------------------")
+    console.log("OS total memory:"+parseInt(os.totalmem()/1024/1024)+"MB")
+    console.log("---------------------------------------------------------")
+    console.log("OS free memory:"+parseInt(os.freemem()/1024/1024)+"MB")
+    console.log("---------------------------------------------------------")
+    console.log("OS type:"+os.type())
+    console.log("---------------------------------------------------------")
+    console.log("CPU info("+os.cpus().length+" models):")
+    console.dir(os.cpus())
+    console.log("---------------------------------------------------------")
+    console.log("CPU Type:"+os.endianness())
+    console.log("---------------------------------------------------------")
+    console.log("System activity(Only for Unix):"+os.loadavg())
+    console.log("---------------------------------------------------------")
+    console.log("Network Info:")
+    console.log("---------------------------------------------------------")
+    console.log(os.networkInterfaces())
+    console.log("=========================================================")
+})()
