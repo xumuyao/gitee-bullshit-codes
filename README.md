@@ -155,6 +155,8 @@
   
 最后恭喜本次坑爹代码大赛活动评论人数最多作品 [大神留步，帮我看个问题](https://gitee.com/oschina/bullshit-codes/blob/master/java/BadCode.java) 喜提 **猫王收音机+花生壳盒子**  
   
-【评论获奖将在19点前公布...】
+【评论区开奖】
+
+ 恭喜[@大武](https://gitee.com/dawuww)、[@stormh](https://gitee.com/stormh)、[@rockrush](https://gitee.com/rockrush)、[@notreami](https://gitee.com/notreami)、[@无知是天堂](https://gitee.com/xunmi)、[@polly](https://gitee.com/pollyduan)、[@FansinZhao](https://gitee.com/fansinZhao)、[@cyper](https://gitee.com/uniquejava)、[@小鹏](https://gitee.com/RocY)、[@dwing](https://gitee.com/dwing)、[@natsume](https://gitee.com/sparklighter)获奖，请将邮寄地址私信给我哟～
 
 
