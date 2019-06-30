@@ -53,4 +53,18 @@ public final class BullishitClass {
             insertPriceRule(map);   // 调用插入数据库方法
         }
     }
+
+    /**
+     * 示例三：获取明天的日期「大坑：我刚刚就被前端坑过，他传了个 2019-06-31 过来」
+     *
+     */
+    @Override
+    public void demo4(JSONObject param) {
+        String date = getSysStrDate();
+        List<String> dateArray = Arrays.asList(date.split("-"));
+        String year = dateArray.get(0);
+        String month = dateArray.get(1);
+        Integer day = Integer.valueOf(dateArray.get(2)) + 1;
+        String tomorrow = year + "-" + month + "-"+day;
+    }
 }
