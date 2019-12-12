@@ -8,7 +8,7 @@ void Swap(int a,int b)
 
 int main()
 {
-    int a = 1,b = 2;
+    int a = 11,b = 12;
     //a依然是1，b依然是2
     Swap(a,b); 
 }
