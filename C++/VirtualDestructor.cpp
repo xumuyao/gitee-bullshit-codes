@@ -1,5 +1,5 @@
 
-//基类的析构函数必须是virtual，否则运动多态后，会造成内存泄漏
+//基类的析构函数必须是virtual，否则使用多态后，会造成内存泄漏
 class Base{
     Base() {std::cout << "constructor Base" << std::endl;}
     ~Base() {std::cout << "destructor Base" << std::endl;}
