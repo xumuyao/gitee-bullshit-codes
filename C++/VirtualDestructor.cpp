@@ -1,4 +1,3 @@
-
 //基类的析构函数必须是virtual，否则使用多态后，会造成内存泄漏
 class Base{
     Base() {std::cout << "constructor Base" << std::endl;}
